@@ -1,0 +1,96 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel = 'stylesheet', type="text/css", href="{%static 'style.css'%}">
+    <title>Sales Report</title>
+</head>
+
+<body>
+    <h1>Summary of sale data</h1>
+    <table style="width:100%">
+        <tr>
+          <th>Order_ID</th>
+          <th>Order_Date</th>
+          <th>Country</th>
+          <th>Item_Type</th>
+          <th>Sales_Channel</th>
+          <th>Ship_Date</th>
+          <th>Delivery time</th>
+          <th>Units_Sold</th>
+          <th>Unit_Price</th>
+          <th>Unit_Cost</th>
+          <th>Total_Profit</th>
+        </tr>
+        {% for event in sale_list %}
+        <tr>
+          <td>{{ event.Order_ID }}</td>
+          <td>{{ event.Order_Date }}</td>
+          <td>{{ event.Country }}</td>
+          <td>{{ event.Item_Type }}</td>
+          <td>{{ event.Sales_Channel }}</td>
+          <td>{{ event.Ship_Date }}</td>
+          <td>{{ event.Ship_Date|timeuntil:event.Order_Date }}</td>
+          <td>{{ event.Units_Sold }}</td>
+          <td>{{ event.Unit_Price }}</td>
+          <td>{{ event.Unit_Cost }}</td>
+          <td>{{ event.Total_Profit }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+        {% if sale_list.has_other_pages %}
+    <ul class="pagination">
+        {% if sale_list.has_previous %}
+        <li><a href="?page={{ sale_list.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in sale_list.paginator.page_range %}
+        {% if sale_list.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if sale_list.has_next %}
+        <li><a href="?page={{ sale_list.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+    <!--Top 10 Sales Countries (Order By Total Revenue)-->
+    <h3>Top 10 Sales Countries</h3>
+    {% for country in top_country%}
+        {{ country.Country }},
+    {% endfor %}
+
+    <!--Top 3 Sales Regions (Order By Total Revenue)-->
+    <h3>Top 3 Sales Regions</h3>
+    {% for region in top_region%}
+        {{ region.Region }},
+    {% endfor %}
+
+    <!--Top 5 Selling Items(Order By Units Sold)-->
+    <h3>Top 5 Selling Items </h3>
+    {% for sell in top_selling %}
+        {{ sell.Item_Type }},
+    {% endfor %}
+
+    <!--Online vs Offline Sales-->
+    <h3>Online vs Offline Sales</h3>
+    Offline-count :{{ offline.count }}
+    Online-count :{{ online.count }}
+
+    <!--Year_Profit listing (Order By Total Profit in the whole year)-->
+    <h3>Year_Profit listing</h3>
+    <b>Year</b> <b>Annual profit</b><br>
+    {% for val in queryset %}
+       {{val.Order_Date__year}} = {{val.total_sum}} <br>
+    {% endfor %}
+</body>
+</html>
