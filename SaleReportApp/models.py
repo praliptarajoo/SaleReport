@@ -1,7 +1,7 @@
 from django.db import models
 # Create your models here.
 
-class SaleData2(models.Model):
+class SaleData(models.Model):
     Region = models.CharField(max_length=255)
     Country = models.CharField(max_length=255)
     Item_Type = models.CharField(max_length=150)

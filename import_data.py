@@ -4,7 +4,7 @@ import sys
 import django
 django.setup()
 import pandas as pd
-from SaleReportApp.models import SaleData2
+from SaleReportApp.models import SaleData
 from datetime import datetime
 
 
@@ -16,7 +16,7 @@ def run():
     sale_df = pd.read_csv("Sample_Sales_Data.csv")
     sale_array = sale_df.to_dict(orient="records")
     for entry in sale_array:
-        sale_data = SaleData2(
+        sale_data = SaleData(
             Region = entry["Region"],
             Country = entry["Country"],
             Item_Type = entry["Item_Type"],
