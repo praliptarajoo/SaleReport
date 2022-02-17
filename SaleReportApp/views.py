@@ -8,12 +8,12 @@ from django.db.models import Sum
 def index(request):
     sale_list = SaleData.objects.all()
     page = request.GET.get('page', 1)
-    top_country = SaleData.objects.order_by('-Total_Revenue')[:10]
-    top_region = SaleData.objects.order_by('-Total_Revenue')[:3]
-    top_selling = SaleData.objects.order_by('-Units_Sold')[:5]
-    offline = SaleData.objects.filter(Sales_Channel = 'Offline')
-    online = SaleData.objects.filter(Sales_Channel = 'Online')
-    queryset = SaleData.objects.values('Order_Date__year').annotate(total_sum=Sum('Total_Revenue')).order_by('Order_Date__year')
+    top_country = SaleData.objects.order_by('-total_revenue')[:10]
+    top_region = SaleData.objects.order_by('-total_revenue')[:3]
+    top_selling = SaleData.objects.order_by('-units_sold')[:5]
+    offline = SaleData.objects.filter(sales_channel = 'Offline')
+    online = SaleData.objects.filter(sales_channel = 'Online')
+    queryset = SaleData.objects.values('order_date__year').annotate(total_sum=Sum('total_revenue')).order_by('order_date__year')
 
     paginator = Paginator(sale_list, 10)
 

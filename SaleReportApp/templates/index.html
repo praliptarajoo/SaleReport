@@ -27,17 +27,17 @@
         </tr>
         {% for event in sale_list %}
         <tr>
-          <td>{{ event.Order_ID }}</td>
-          <td>{{ event.Order_Date }}</td>
-          <td>{{ event.Country }}</td>
-          <td>{{ event.Item_Type }}</td>
-          <td>{{ event.Sales_Channel }}</td>
-          <td>{{ event.Ship_Date }}</td>
-          <td>{{ event.Ship_Date|timeuntil:event.Order_Date }}</td>
-          <td>{{ event.Units_Sold }}</td>
-          <td>{{ event.Unit_Price }}</td>
-          <td>{{ event.Unit_Cost }}</td>
-          <td>{{ event.Total_Profit }}</td>
+          <td>{{ event.order_id }}</td>
+          <td>{{ event.order_date }}</td>
+          <td>{{ event.country }}</td>
+          <td>{{ event.item_type }}</td>
+          <td>{{ event.sales_channel }}</td>
+          <td>{{ event.ship_date }}</td>
+          <td>{{ event.ship_date|timeuntil:event.order_date }}</td>
+          <td>{{ event.units_sold }}</td>
+          <td>{{ event.unit_price }}</td>
+          <td>{{ event.unit_cost }}</td>
+          <td>{{ event.total_profit }}</td>
         </tr>
         {% endfor %}
     </table>
@@ -66,19 +66,19 @@
     <!--Top 10 Sales Countries (Order By Total Revenue)-->
     <h3>Top 10 Sales Countries</h3>
     {% for country in top_country%}
-        {{ country.Country }},
+        {{ country.country }},
     {% endfor %}
 
     <!--Top 3 Sales Regions (Order By Total Revenue)-->
     <h3>Top 3 Sales Regions</h3>
     {% for region in top_region%}
-        {{ region.Region }},
+        {{ region.region }},
     {% endfor %}
 
     <!--Top 5 Selling Items(Order By Units Sold)-->
     <h3>Top 5 Selling Items </h3>
     {% for sell in top_selling %}
-        {{ sell.Item_Type }},
+        {{ sell.item_type }},
     {% endfor %}
 
     <!--Online vs Offline Sales-->
@@ -90,7 +90,7 @@
     <h3>Year_Profit listing</h3>
     <b>Year</b> <b>Annual profit</b><br>
     {% for val in queryset %}
-       {{val.Order_Date__year}} = {{val.total_sum}} <br>
+       {{val.order_date__year}} = {{val.total_sum}} <br>
     {% endfor %}
 </body>
 </html>
